@@ -4,9 +4,9 @@ import ToDoItem from './ToDoItem/ToDoItem';
 
 const styles = theme => ({
     root: {
-        overflow: 'scroll',
+        overflowY: 'scroll',
         maxHeight: 500,
-        width:400,
+        maxWidth:500,
         margin:'auto'
       },
 });

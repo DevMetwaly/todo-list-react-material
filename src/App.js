@@ -6,6 +6,7 @@ import ToDoList from './ToDoList/ToDoList';
 import axios from 'axios';
 import ProgressBar from './ProgressBar/ProgressPar';
 import AddTask from './AddTask/AddTask';
+import ToDoTab from './ToDoTab/ToDoTab';
 
 const styles = {
  
@@ -13,7 +14,8 @@ const styles = {
 
 class App extends Component {
   state = {
-    todoElements:[]
+    todoElements:[],
+    tabIndex:0
   }
   
   getData = () => {
@@ -90,16 +92,26 @@ class App extends Component {
     })
   }
 
+  handleTabSelected = (event,index) => {
+    this.setState({tabIndex:index})
+  }
 
   render() {
+    let todoElements;
+    if(this.state.tabIndex===0) todoElements=this.state.todoElements;
+    else if(this.state.tabIndex===1) todoElements=this.state.todoElements.filter(task => !task.completed)
+    else todoElements=this.state.todoElements.filter(task => task.completed)
     
     return (
       <Fragment>
         <Header />
         <ProgressBar value={this.calProgress()}/>
         <AddTask handleSubmit={this.handleSubmit}/>
+        <ToDoTab 
+          index={this.state.tabIndex}
+          handleChange={this.handleTabSelected}/>
         <ToDoList 
-          todoElements={this.state.todoElements}
+          todoElements={todoElements}
           handleComplete={this.handleComplete}
           handleDelete={this.handleDelete} />
       </Fragment>
